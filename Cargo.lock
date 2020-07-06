@@ -191,8 +191,18 @@ dependencies = [
  "parse-display",
  "serde",
  "serde_json",
+ "smartstring",
  "smol_str",
  "textplots",
+]
+
+[[package]]
+name = "smartstring"
+version = "0.2.2"
+source = "registry+https://github.com/rust-lang/crates.io-index"
+checksum = "2ddd95b93f4ae6f69d6fe019bbb1fc1289f489e3ff8473d15c6cb4b8ec6ab52d"
+dependencies = [
+ "static_assertions",
 ]
 
 [[package]]
@@ -203,6 +213,12 @@ checksum = "2f7909a1d8bc166a862124d84fdc11bda0ea4ed3157ccca662296919c2972db1"
 dependencies = [
  "serde",
 ]
+
+[[package]]
+name = "static_assertions"
+version = "1.1.0"
+source = "registry+https://github.com/rust-lang/crates.io-index"
+checksum = "a2eb9349b6444b326872e140eb1cf5e7c522154d69e7a0ffb0fb81c06b37543f"
 
 [[package]]
 name = "syn"

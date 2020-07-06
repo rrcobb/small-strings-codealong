@@ -15,3 +15,4 @@ serde_json = "1.0.56"
 smol_str = { version = "0.1.15", features = ["serde"] }
 textplots = "0.5.1"
 parse-display = "0.1.2"
+smartstring = "0.2.2"
