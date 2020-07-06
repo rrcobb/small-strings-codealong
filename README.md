@@ -7,3 +7,44 @@ I saw fewer allocations with SmolStr when I ran it, which is because I'm using t
 ![slightly fewer allocations](smol-output.png)
 
 Sidenote: simply amazing to see how fast things move, this got faster in the 16 hours between fasterthanlime posting on twitter and me trying it out.
+
+Screenshot above should show the output below:
+
+```shell
+$ cargo build && ./target/debug/small sample --lib smol 2> events.ldjson && ./target/debug/small report events.ldjson
+    Finished dev [unoptimized + debuginfo] target(s) in 0.55s
+Read 1000 records
+found 36 events
+⡁⠈ ⠁⠈ ⠁⠈ ⠁⠈ ⠁⠈ ⠁⠈ ⠁⠈ ⠁⠈ ⠁⠈ ⠁⠈ ⠁⠈ ⠁⠈ ⠁⠈ ⠁⠈ ⠁⠈ ⠁⠈ ⠁⠈ ⠁⠈⢸⠉⡏ ⠁⠈ ⡁ 73896.0
+⠄                                                    ⢸ ⡇    ⠄
+⠂                                                    ⢸ ⡇    ⠂
+⡁                                                    ⢸ ⡇    ⡁
+⠄                                                    ⢸ ⡇    ⠄
+⠂                                                    ⢸ ⡇    ⠂
+⡁                                                    ⢸ ⣇⣀⣀⣀ ⡁
+⠄                                                    ⢸      ⠄
+⠂                                                    ⢸      ⠂
+⡁                                                    ⢸      ⡁
+⠄                                               ⢸⠉⡇  ⢸      ⠄
+⠂                                               ⢸ ⡇  ⢸      ⠂
+⡁                                               ⢸ ⡇  ⢸      ⡁
+⠄                                               ⢸ ⠓⠒⠒⠚      ⠄
+⠂                                               ⢸           ⠂
+⡁                                            ⡏⢹ ⢸           ⡁
+⠄                                            ⡇⢸⣀⣸           ⠄
+⠂                                       ⡤⢤   ⡇              ⠂
+⡁                                   ⢀⣀⣀ ⡇⠘⠒⠒⠒⠃              ⡁
+⠄                        ⣀⣀ ⢀⣀⣀⣰⠒⠲⠤⠤⠼ ⠘⠒⠃                   ⠄
+⠉⠉⠉⠉⠉⠉⠉⠉⠉⠉⠉⠉⠉⠉⠉⠉⠉⠉⠉⠉⠉⠉⠉⠉⠉⠉⠈⠉⠉ ⠁⠈ ⠁⠈ ⠁⠈ ⠁⠈ ⠁⠈ ⠁⠈ ⠁⠈ ⠁⠈ ⠁⠈ ⠁⠈ ⠁ 1.0
+0.0                                                      36.0
+     total events | 36
+      peak bytes  | 73.9 KB
+     ----------------------------
+     alloc events | 20
+     alloc bytes  | 98.5 KB
+     ----------------------------
+     freed events | 16
+     freed bytes  | 49.2 KB
+```
+
+compare to the 42 events (23 alloc, 19 freed) of the blog post.
