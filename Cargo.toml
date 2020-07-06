@@ -8,9 +8,10 @@ edition = "2018"
 
 [dependencies]
 argh = "0.1.3"
-
+bytesize = "1.0.1"
+libc = "0.2.71"
 serde = { version = "1.0.114", features = ["derive"] }
 serde_json = "1.0.56"
-libc = "0.2.71"
-bytesize = "1.0.1"
+smol_str = { version = "0.1.15", features = ["serde"] }
 textplots = "0.5.1"
+parse-display = "0.1.2"

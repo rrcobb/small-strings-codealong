@@ -1,29 +1,50 @@
 use argh::FromArgs;
+use parse_display::{Display, FromStr};
 
 #[derive(FromArgs)]
 /// Run sample code
 #[argh(subcommand, name = "sample")]
-pub struct Sample {}
+pub struct Sample {
+    #[argh(option)]
+    /// which library to use
+    lib: Lib,
+}
+
+#[derive(Display, FromStr)]
+#[display(style = "snake_case")]
+enum Lib {
+    Std,
+    Smol,
+    Smart,
+}
 
 impl Sample {
     pub fn run(self) {
-        self.read_records();
+        match self.lib {
+            Lib::Std => self.read_records::<String>(),
+            Lib::Smol => self.read_records::<smol_str::SmolStr>(),
+            Lib::Smart => todo!(),
+        }
     }
 
-    fn read_records(&self) {
+    fn read_records<S>(&self)
+        where
+            S: serde::de::DeserializeOwned,
+    {
        use serde::Deserialize; 
 
        #[derive(Deserialize)]
-       struct Record<'a> {
+       struct Record<S> {
            #[allow(unused)]
-           city: &'a str,
+           city: S,
            #[allow(unused)]
-           state: &'a str,
+           state: S,
        }
 
+       use std::fs::File;
+       let f = File::open("cities.json").unwrap();
        crate::ALLOCATOR.set_active(true);
-       let input = std::fs::read_to_string("cities.json").unwrap();
-       let records: Vec<Record> = serde_json::from_str(&input).unwrap();
+       let records: Vec<Record<S>> = serde_json::from_reader(f).unwrap();
        crate::ALLOCATOR.set_active(false);
        println!("Read {} records", records.len());
     }
