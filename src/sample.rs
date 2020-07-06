@@ -14,17 +14,16 @@ impl Sample {
        use serde::Deserialize; 
 
        #[derive(Deserialize)]
-       struct Record {
+       struct Record<'a> {
            #[allow(unused)]
-           city: String,
+           city: &'a str,
            #[allow(unused)]
-           state: String
+           state: &'a str,
        }
 
-       use std::fs::File;
-       let f = File::open("cities.json").unwrap();
        crate::ALLOCATOR.set_active(true);
-       let records: Vec<Record> = serde_json::from_reader(f).unwrap();
+       let input = std::fs::read_to_string("cities.json").unwrap();
+       let records: Vec<Record> = serde_json::from_str(&input).unwrap();
        crate::ALLOCATOR.set_active(false);
        println!("Read {} records", records.len());
     }
